@@ -28,8 +28,10 @@ defmodule Ecto.Adapters.PostgresWithoutCache.Connection do
 
   def prepare_execute(conn, _name, sql, params, opts) do
     query = %Postgrex.Query{name: "", statement: sql}
-    { :ok, result } = execute(conn, query, params, opts)
-    { :ok, query, result }
+    case execute(conn, query, params, opts) do
+      {:ok, result} -> { :ok, query, result }
+      {:error, _} = error -> error
+    end
   end
 
   def execute(conn, sql, params, opts) when is_binary(sql) do
@@ -38,7 +40,10 @@ defmodule Ecto.Adapters.PostgresWithoutCache.Connection do
   end
 
   def execute(conn, %{} = query, params, opts) do
-    { :ok, _query, result } = DBConnection.prepare_execute(conn, query, params, opts)
-    { :ok, result }
+    case DBConnection.prepare_execute(conn, query, params, opts) do
+      {:ok, _query, result} -> {:ok, result}
+      {:error, _} = error -> error
+    end
   end
+  
 end
