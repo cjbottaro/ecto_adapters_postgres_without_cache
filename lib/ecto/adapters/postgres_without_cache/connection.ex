@@ -13,7 +13,7 @@
 # prepare_execute/5, and never return the metadata it generates.
 #
 # The downside is that now we're generating that metadata for every query.
-defmodule Ecto.Adapters.PostgresAdapterWithoutCache.Connection do
+defmodule Ecto.Adapters.PostgresWithoutCache.Connection do
   @behaviour Ecto.Adapters.SQL.Connection
 
   defdelegate all(a1),                    to: Ecto.Adapters.Postgres.Connection
