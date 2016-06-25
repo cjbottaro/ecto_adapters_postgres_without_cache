@@ -26,7 +26,7 @@ defmodule Ecto.Adapters.PostgresAdapterWithoutCache.Connection do
   defdelegate update(a1, a2, a3, a4, a5), to: Ecto.Adapters.Postgres.Connection
   defdelegate update_all(a1),             to: Ecto.Adapters.Postgres.Connection
 
-  def prepare_execute(conn, name, sql, params, opts) do
+  def prepare_execute(conn, _name, sql, params, opts) do
     query = %Postgrex.Query{name: "", statement: sql}
     { :ok, result } = execute(conn, query, params, opts)
     { :ok, query, result }
